@@ -1,0 +1,46 @@
+test func() int
+  b1:
+    (?) v1 = InitMem <mem>
+    (?) v2 = SP <uintptr>
+    (?) v5 = Const64 <int> [0]
+    (-4) v6 = LocalAddr <*[3]int> {.autotmp_3} v2 v1
+    (4) v7 = Zero <mem> {[3]int} [24] v6 v1
+    (-4) v8 = LocalAddr <*[3]int> {.autotmp_3} v2 v7
+    (?) v9 = Const64 <int> [1]
+    (4) v10 = NilCheck <*[3]int> v8 v7
+    (?) v11 = Const64 <int> [3]
+    (4) v12 = PtrIndex <*int> v10 v5
+    (4) v13 = Store <mem> {int} v12 v9 v7
+    (?) v14 = Const64 <int> [2]
+    (4) v15 = NilCheck <*[3]int> v8 v13
+    (4) v16 = PtrIndex <*int> v15 v9
+    (4) v17 = Store <mem> {int} v16 v14 v13
+    (4) v18 = NilCheck <*[3]int> v8 v17
+    (4) v19 = PtrIndex <*int> v18 v14
+    (4) v20 = Store <mem> {int} v19 v11 v17
+    (4) v21 = NilCheck <*[3]int> v8 v20
+    (-4) v22 = Copy <*int> v21
+    (4) v23 = IsSliceInBounds <bool> v5 v11
+    If v23 -> b2 b3 (likely)
+  b2: <- b1
+    (4) v26 = Sub64 <int> v11 v5
+    (4) v27 = SliceMake <[]int> v22 v26 v26 (arr[[]int])
+    (5) v28 = SliceLen <int> v27
+    (5) v29 = IsInBounds <bool> v11 v28
+    If v29 -> b4 b5 (likely)
+  b3: <- b1
+    (-4) v24 = Copy <mem> v20
+    (4) v25 = PanicBounds <mem> [6] v5 v11 v24
+    Exit v25
+  b4: <- b2
+    (5) v32 = SlicePtr <*int> v27
+    (5) v33 = PtrIndex <*int> v32 v11
+    (-5) v34 = Copy <mem> v20
+    (5) v35 = Load <int> v33 v34
+    (5) v36 = MakeResult <int,mem> v35 v34
+    Ret v36
+  b5: <- b2
+    (-5) v30 = Copy <mem> v20
+    (5) v31 = PanicBounds <mem> [0] v11 v28 v30
+    Exit v31
+name arr[[]int]: [v27]
