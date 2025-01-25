@@ -1,0 +1,10 @@
+main func()
+  b1:
+    (?) v1 = InitMem <mem>
+    (?) v3 = SB <uintptr>
+    (?) v4 = Addr <*uint8> {type:string} v3
+    (?) v5 = Addr <*string> {main..stmp_0} v3
+    (4) v6 = IMake <interface {}> v4 v5
+    (4) v7 = StaticLECall <mem> {AuxCall{runtime.gopanic}} [16] v6 v1
+    (4) v8 = SelectN <mem> [0] v7
+    Exit v8

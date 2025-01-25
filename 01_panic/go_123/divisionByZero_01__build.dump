@@ -1,0 +1,20 @@
+divisionByZero func(int, int) int
+  b1:
+    (?) v1 = InitMem <mem>
+    (-3) v7 = Arg <int> {x} (x[int])
+    (-3) v8 = Arg <int> {y} (y[int])
+    (?) v9 = Const64 <int> [0]
+    (4) v10 = Neq64 <bool> v8 v9
+    If v10 -> b2 b3 (likely)
+  b2: <- b1
+    (4) v14 = Div64 <int> [false] v7 v8 (z[int])
+    (-5) v15 = Copy <mem> v1
+    (5) v16 = MakeResult <int,mem> v14 v15
+    Ret v16
+  b3: <- b1
+    (-4) v11 = Copy <mem> v1
+    (4) v12 = StaticLECall <mem> {AuxCall{runtime.panicdivide}} v11
+    Exit v12
+name x[int]: [v7]
+name y[int]: [v8]
+name z[int]: [v14]
